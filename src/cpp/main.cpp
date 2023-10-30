@@ -8,6 +8,6 @@
 #include "task_1.h"
 using namespace std;
 int main() {
-    cout<<"helojndcnnmco";
+    cout<<"helojndcnnmcosdsdman";
 
 }
