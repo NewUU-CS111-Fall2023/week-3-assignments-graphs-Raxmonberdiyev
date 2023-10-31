@@ -1,49 +1,52 @@
 /*
  * Author: RAXIMBERDI
- * Date:
+ * Date:10/31/2023
  * Name:
  */
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> adj[100005];
-int depth[100005];
+const int MAXN = 2e5 + 5;
+vector<int> adj[MAXN];
+int dist[MAXN];
 
-void add_edge(int u, int v) {
-    adj[u].push_back(v);
-    adj[v].push_back(u);
-}
-
-void dfs(int node, int parent) {
-    depth[node] = depth[parent] + 1;
-    for(int child : adj[node]) {
-        if(child != parent) {
-            dfs(child, node);
+void bfs(int s) {
+    memset(dist, -1, sizeof(dist));
+    queue<int> q;
+    dist[s] = 0;
+    q.push(s);
+    while (!q.empty()) {
+        int v = q.front();
+        q.pop();
+        for (int u : adj[v]) {
+            if (dist[u] == -1) {
+                dist[u] = dist[v] + 1;
+                q.push(u);
+            }
         }
     }
 }
 
-int solve(int n, int x, vector<pair<int, int>>& edges) {
-    for(auto& edge : edges) {
-        add_edge(edge.first, edge.second);
-    }
-
-    dfs(1, 0);
-
-    if(depth[1] <= depth[x]) {
-        return 2 * depth[x] - 1;
-    } else {
-        return 2 * depth[x];
-    }
-}
-
 int main() {
-    int n = 5;
-    int x = 3;
-    vector<pair<int, int>> edges = {{1, 2}, {1, 3}, {3, 4}, {3, 5}};
+    ios::sync_with_stdio(false);
+    cin.tie(0);
 
-    cout << solve(n, x, edges) << endl;  // Output: 5
+    int n, x;
+    cin >> n >> x;
+    for (int i = 0; i < n - 1; i++) {
+        int a, b;
+        cin >> a >> b;
+        adj[a].push_back(b);
+        adj[b].push_back(a);
+    }
+
+    bfs(1);
+    int d = dist[x];
+    bfs(x);
+    int max_d = *max_element(dist + 1, dist + n + 1);
+
+    cout << max(d * 2, max_d * 2) << "\n";
 
     return 0;
 }

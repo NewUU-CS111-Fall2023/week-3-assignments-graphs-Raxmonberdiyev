@@ -1,6 +1,6 @@
 /*
  * Author: RAXIMBERDI
- * Date:
+ * Date:10/31/2023
  * Name:
  */
 
@@ -74,8 +74,8 @@ int main() {
     reverse(path.begin(), path.end());
 
     cout << dist[path[0]][path[1]] << endl;
-    for(int city : path) {
-        cout << city << " ";
+    for(int CITY : path) {
+        cout << CITY << " ";
     }
 
     return 0;
